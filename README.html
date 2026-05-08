@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lessy Dévaradja Jean-Noah | Admin Systèmes & Réseaux</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+
+        /* ============================================================
+           RESET & BASE
+        ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ============================================================
+           CSS VARIABLES — DARK MODE (défaut)
+        ============================================================ */
+        :root,
+        [data-theme="dark"] {
+            --bg-primary: #09090b;
+            --bg-secondary: #18181b;
+            --bg-tertiary: #27272a;
+            --accent: #f97316;
+            --accent-light: #fb923c;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #52525b;
+            --glow: rgba(249, 115, 22, 0.3);
+            --terminal-bg: #0d0d0f;
+            --terminal-border: rgba(249, 115, 22, 0.4);
+            --card-bg: rgba(24, 24, 27, 0.8);
+            --nav-bg: rgba(24, 24, 27, 0.7);
+            --status-bg: rgba(9, 9, 11, 0.9);
+        }
+
+        /* ============================================================
+           CSS VARIABLES — LIGHT MODE "Light Lab"
+        ============================================================ */
+        [data-theme="light"] {
+            --bg-primary: #f4f4f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e4e4e7;
+            --accent: #ea6d0a;
+            --accent-light: #f97316;
+            --text-primary: #09090b;
+            --text-secondary: #52525b;
+            --text-tertiary: #a1a1aa;
+            --glow: rgba(234, 109, 10, 0.2);
+            --terminal-bg: #1a1a1f;
+            --terminal-border: rgba(234, 109, 10, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --status-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        /* ============================================================
+           BODY & LAYOUT
+        ============================================================ */
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* ============================================================
+           CUSTOM CURSOR (désactivé sur mobile)
+        ============================================================ */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        /* ============================================================
+           BACKGROUND EFFECTS
+        ============================================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 146, 60, 0.08) 0%, transparent 50%);
+            animation: gradientRotate 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        [data-theme="light"] body::before {
+            background:
+                radial-gradient(circle at 20% 50%, rgba(249, 115, 22, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(234, 109, 10, 0.04) 0%, transparent 50%);
+        }
+
+        @keyframes gradientRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 0;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        }
+
+        /* ============================================================
+           PARTICLES
+        ============================================================ */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: float linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.3; }
+            90%  { opacity: 0.1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        /* ============================================================
+           SCROLL PROGRESS BAR
+        ============================================================ */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1000;
+            transform-origin: left;
+            box-shadow: 0 0 10px var(--glow);
+            transition: none;
+        }
+
+        /* ============================================================
+           CONTAINER
+        ============================================================ */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           NAVIGATION
+        ============================================================ */
+        .nav {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            transition: background 0.4s ease;
+        }
+
+        .nav-item {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover { color: var(--accent); }
+
+        /* ============================================================
+           THEME TOGGLE BUTTON
+        ============================================================ */
+        .theme-toggle {
+            background: none;
+            border: 1px solid rgba(249, 115, 22, 0.4);
+            border-radius: 50px;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(249, 115, 22, 0.1);
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        /* ============================================================
+           PDF DOWNLOAD BUTTON (flottant)
+        ============================================================ */
+        .pdf-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.4rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 8px 30px var(--glow);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease 1.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px var(--glow);
+            background: var(--accent-light);
+        }
+
+        .pdf-btn::before {
+            content: '⬇';
+            font-size: 1rem;
+        }
+
+        /* ============================================================
+           HERO SECTION
+        ============================================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           GLITCH EFFECT — h1 et titres de section
+        ============================================================ */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .glitch::before {
+            color: #0ff;
+            -webkit-text-fill-color: #0ff;
+            animation: glitch-1 4s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        }
+
+        .glitch::after {
+            color: #f0f;
+            -webkit-text-fill-color: #f0f;
+            animation: glitch-2 4s infinite;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        }
+
+        [data-theme="light"] .glitch::before { color: rgba(0,220,255,0.5); -webkit-text-fill-color: rgba(0,220,255,0.5); }
+        [data-theme="light"] .glitch::after  { color: rgba(240,0,240,0.3); -webkit-text-fill-color: rgba(240,0,240,0.3); }
+
+        @keyframes glitch-1 {
+            0%, 90%, 100% { transform: translate(0); opacity: 0; }
+            91%  { transform: translate(-2px, 1px); opacity: 0.8; }
+            93%  { transform: translate(2px, -1px); opacity: 0.8; }
+            95%  { transform: translate(-1px, 0); opacity: 0.8; }
+            97%  { transform: translate(1px, 1px); opacity: 0; }
+        }
+
+        @keyframes glitch-2 {
+            0%, 88%, 100% { transform: translate(0); opacity: 0; }
+            89%  { transform: translate(2px, -1px); opacity: 0.8; }
+            91%  { transform: translate(-2px, 1px); opacity: 0.8; }
+            93%  { transform: translate(0, 0); opacity: 0; }
+        }
+
+        /* Section titles glitch — plus subtil */
+        .section-title.glitch::before,
+        .section-title.glitch::after {
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title.glitch:hover::before {
+            color: rgba(0,220,255,0.6);
+            -webkit-text-fill-color: rgba(0,220,255,0.6);
+            animation: glitch-1 0.6s infinite;
+        }
+
+        .section-title.glitch:hover::after {
+            color: rgba(240,0,240,0.4);
+            -webkit-text-fill-color: rgba(240,0,240,0.4);
+            animation: glitch-2 0.6s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 800;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            letter-spacing: -0.05em;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-description {
+            max-width: 600px;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-info {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            animation: fadeInUp 0.8s ease 1s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.8s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* ============================================================
+           BUTTONS
+        ============================================================ */
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--bg-tertiary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        /* ============================================================
+           FLOATING STATS CARDS
+        ============================================================ */
+        .floating-stats {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            min-width: 150px;
+            text-align: center;
+            animation: float-card 3s ease-in-out infinite;
+            transition: background 0.4s ease;
+        }
+
+        .stat-card:nth-child(2) { animation-delay: 0.5s; }
+        .stat-card:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes float-card {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* ============================================================
+           LIVE STATUS DASHBOARD
+        ============================================================ */
+        .status-dashboard {
+            background: var(--status-bg);
+            border: 1px solid rgba(249, 115, 22, 0.25);
+            border-radius: 16px;
+            padding: 1.2rem 1.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            margin-top: 3rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            animation: fadeInUp 0.8s ease 1.2s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            backdrop-filter: blur(20px);
+            transition: background 0.4s ease;
+        }
+
+        .status-label {
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.7rem;
+        }
+
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .status-value {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .status-value.green { color: #22c55e; }
+        .status-value.orange { color: var(--accent); }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            margin-right: 6px;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .status-bar {
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            width: 80px;
+            overflow: hidden;
+        }
+
+        .status-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--accent);
+            transition: width 1s ease;
+        }
+
+        .status-bar-fill.green { background: #22c55e; }
+
+        /* ============================================================
+           SECTIONS
+        ============================================================ */
+        .section {
+            margin: 8rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            cursor: default;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            margin-left: 2rem;
+        }
+
+        /* ============================================================
+           SKILLS GRID
+        ============================================================ */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(39,39,42,0.4) 100%);
+            border: 1px solid rgba(249, 115, 22, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-card:hover::before { opacity: 1; }
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.2);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+
+        .skill-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .skill-list { list-style: none; }
+
+        .skill-list li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .skill-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ============================================================
+           "20 MINUTES SI" — Bloc visuel distinct
+        ============================================================ */
+        .vingt-minutes {
+            margin-top: 2.5rem;
+            background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(249,115,22,0.03) 100%);
+            border: 1px solid rgba(249,115,22,0.35);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 16px 16px 0;
+            padding: 1.8rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vingt-minutes::before {
+            content: '📡';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            opacity: 0.15;
+        }
+
+        .vingt-minutes-badge {
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .vingt-minutes h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .vingt-minutes p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+           TIMELINE
+        ============================================================ */
+        .timeline {
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -4.5rem; top: 0;
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(249,115,22,0.2);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(249,115,22,0.2); }
+            50%       { box-shadow: 0 0 0 8px rgba(249,115,22,0.1); }
+        }
+
+        .timeline-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .timeline-description li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-description li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* ============================================================
+           TAGS
+        ============================================================ */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            padding: 0.6rem 1.2rem;
+            background: rgba(249,115,22,0.1);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .tag:hover::before { width: 200%; height: 200%; }
+        .tag:hover { color: var(--bg-primary); box-shadow: 0 0 20px var(--glow); }
+        .tag span { position: relative; z-index: 1; }
+
+        /* ============================================================
+           QUALITIES GRID
+        ============================================================ */
+        .qualities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .quality-card {
+            background: rgba(24,24,27,0.5);
+            border: 1px solid rgba(249,115,22,0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .quality-card {
+            background: rgba(255,255,255,0.7);
+        }
+
+        .quality-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--glow), transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+        }
+
+        .quality-card:hover::after { opacity: 1; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        .quality-card-inner { position: relative; z-index: 1; }
+        .quality-card:hover { transform: scale(1.05); border-color: var(--accent); }
+
+        .quality-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .quality-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================================
+           KREOTECH — Case Study miniature
+        ============================================================ */
+        .case-study {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(249,115,22,0.04) 100%);
+            border: 1px solid rgba(249,115,22,0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .case-study:hover {
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(249,115,22,0.15);
+        }
+
+        .case-study::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .case-study-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .case-study-logo {
+            width: 60px; height: 60px;
+            background: var(--accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .case-study-meta { flex: 1; }
+
+        .case-study-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(249,115,22,0.15);
+            border: 1px solid rgba(249,115,22,0.3);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .case-study-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .case-study-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .case-study-metrics {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .metric-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .case-study-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .case-study-list li {
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .case-study-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .case-study-footer {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(249,115,22,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: gap;
+            gap: 1rem;
+        }
+
+        .case-study-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================================
+           TERMINAL INTERACTIF
+        ============================================================ */
+        .terminal-section {
+            margin: 8rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .terminal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .terminal {
+            background: var(--terminal-bg);
+            border: 1px solid var(--terminal-border);
+            border-radius: 16px;
+            overflow: hidden;
+            font-family: 'Space Mono', monospace;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(249,115,22,0.05);
+        }
+
+        .terminal-titlebar {
+            background: rgba(249,115,22,0.08);
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(249,115,22,0.15);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red    { background: #ff5f57; }
+        .terminal-dot.yellow { background: #febc2e; }
+        .terminal-dot.green  { background: #28c840; }
+
+        .terminal-title {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            flex: 1;
+            text-align: center;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            min-height: 320px;
+            max-height: 420px;
+            overflow-y: auto;
+        }
+
+        .terminal-body::-webkit-scrollbar { width: 4px; }
+        .terminal-body::-webkit-scrollbar-track { background: transparent; }
+        .terminal-body::-webkit-scrollbar-thumb { background: rgba(249,115,22,0.3); border-radius: 2px; }
+
+        .terminal-output {
+            margin-bottom: 1rem;
+        }
+
+        .terminal-line {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .terminal-line.prompt { color: var(--accent); }
+        .terminal-line.result { color: #a1efbd; white-space: pre-wrap; }
+        .terminal-line.error  { color: #f87171; }
+        .terminal-line.info   { color: #60a5fa; }
+        .terminal-line.cmd    { color: var(--text-primary); }
+
+        .terminal-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .terminal-prompt-prefix {
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .terminal-input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            flex: 1;
+            caret-color: var(--accent);
+        }
+
+        .terminal-hint {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        .footer {
+            margin-top: 8rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(249,115,22,0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            font-family: 'Space Mono', monospace;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover { color: var(--accent); }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .floating-stats {
+                position: relative;
+                right: auto; top: auto;
+                transform: none;
+                flex-direction: row;
+                margin: 3rem 0;
+            }
+
+            .nav {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero { min-height: auto; }
+            .section, .terminal-section { margin: 4rem 0; }
+
+            .timeline { padding-left: 2rem; }
+            .timeline-item { padding-left: 1rem; }
+            .timeline-item::before { left: -2.5rem; }
+
+            .skills-grid, .qualities-grid { grid-template-columns: 1fr; }
+
+            .nav { display: none; }
+
+            .status-dashboard { gap: 1rem; }
+
+            /* Désactivation curseur custom sur mobile */
+            body { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+
+            .pdf-btn { bottom: 1rem; right: 1rem; padding: 0.7rem 1rem; font-size: 0.75rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ========== CUSTOM CURSOR ========== -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- ========== SCROLL PROGRESS ========== -->
+    <div class="scroll-progress"></div>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="nav">
+        <a href="#profil"      class="nav-item">profil</a>
+        <a href="#competences" class="nav-item">compétences</a>
+        <a href="#experience"  class="nav-item">expérience</a>
+        <a href="#formation"   class="nav-item">formation</a>
+        <a href="#projet"      class="nav-item">projet</a>
+        <a href="#console"     class="nav-item">console</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">◐ LIGHT</button>
+    </nav>
+
+    <!-- ========== PDF DOWNLOAD BUTTON ========== -->
+    <a href="#" class="pdf-btn" onclick="window.print(); return false;" title="Télécharger en PDF">
+        Télécharger PDF
+    </a>
+
+    <!-- ========== PARTICLES ========== -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+
+        <!-- ========== HERO / PROFIL ========== -->
+        <section class="hero" id="profil">
+            <div class="hero-badge">Disponible pour nouvelles opportunités</div>
+
+            <h1>LESSY<br>DÉVARADJA<br>JEAN-NOAH</h1>
+
+            <h2>Admin Systèmes &amp; Réseaux • Infrastructure IT</h2>
+
+            <p class="hero-description">
+                Actuellement en alternance chez SEMAC comme Assistant SI, j'ai développé de bonnes bases en administration systèmes et réseaux.<br><br>
+                Je souhaite intégrer votre entreprise pour renforcer mes compétences et continuer à progresser dans l'infrastructure informatique.<br><br>
+                Curieux, rigoureux et passionné, je suis prêt à m'investir pleinement en entreprise et en formation pour devenir un professionnel du métier.
+            </p>
+
+            <div class="hero-cta">
+                <a href="mailto:deva.lessy@gmail.com" class="btn btn-primary">deva.lessy@gmail.com</a>
+                <a href="tel:0692200023" class="btn btn-secondary">0692 20 00 23</a>
+            </div>
+
+            <div class="hero-info">
+                <span>📍 683 chemin Valentin, 97440 Saint-André</span>
+                <span>🚗 Permis B</span>
+            </div>
+
+
+
+            <div class="floating-stats">
+                <div class="stat-card">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">Ans d'expérience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Stages techniques</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Engagement</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 01 - COMPÉTENCES TECHNIQUES ========== -->
+        <section class="section" id="competences">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title glitch" data-text="Compétences Techniques">Compétences Techniques</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">SYS</div>
+                    <h3 class="skill-title">Systèmes &amp; Administration</h3>
+                    <ul class="skill-list">
+                        <li>Windows Server (2016 / 2019 / 2022)</li>
+                        <li>Active Directory (comptes, groupes, droits, GPO)</li>
+                        <li>Déploiement de postes / imprimantes</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">NET</div>
+                    <h3 class="skill-title">Réseaux &amp; Infrastructure</h3>
+                    <ul class="skill-list">
+                        <li>Réseaux : TCP/IP, DNS, DHCP, VLAN</li>
+                        <li>Configuration réseau &amp; Wi-Fi</li>
+                        <li>Fibre optique &amp; soudure</li>
+                        <li>Câblage &amp; baie de brassage</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">SEC</div>
+                    <h3 class="skill-title">Support &amp; Sécurité</h3>
+                    <ul class="skill-list">
+                        <li>Support utilisateurs N1/N2</li>
+                        <li>Gestion des tickets (FreshService)</li>
+                        <li>Cybersécurité (mots de passe, antivirus)</li>
+                    </ul>
+
+                    <!-- Bloc "20 minutes SI" -->
+                    <div class="vingt-minutes">
+                        <div class="vingt-minutes-badge">INITIATIVE PÉDAGOGIQUE</div>
+                        <h4>⚡ Les "20 minutes SI"</h4>
+                        <p>
+                            Animation de mini-formations IT hebdomadaires pour les utilisateurs non-techniques de SEMAC. Objectif : vulgariser des sujets complexes (cybersécurité, bonnes pratiques, outils métier) en 20 minutes chrono. Amélioration mesurée de l'autonomie des utilisateurs et réduction des tickets récurrents.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 02 - EXPÉRIENCE PROFESSIONNELLE ========== -->
+        <section class="section" id="experience">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title glitch" data-text="Expérience Professionnelle">Expérience Professionnelle</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Septembre 2025 – Septembre 2026 (1 an) • En cours</div>
+                    <h3 class="timeline-title">Alternance L3 – Assistant SI</h3>
+                    <div class="timeline-company">SEMAC (Groupe Territoires Réunion)</div>
+                    <ul class="timeline-description">
+                        <li>Administration des comptes, groupes et droits via Active Directory (GPO, OUs)</li>
+                        <li>Supervision et maintien en conditions opérationnelles de l'infrastructure réseau</li>
+                        <li>Gestion des incidents et suivi des tickets via FreshService (support N1/N2)</li>
+                        <li>Déploiement et configuration de postes de travail et imprimantes</li>
+                        <li>Rédaction de procédures techniques et documentation IT</li>
+                        <li>Participation au déploiement de solutions de virtualisation</li>
+                        <li>Animation des "20 minutes SI" (mini-formations IT pour les utilisateurs)</li>
+                        <li>Veille technologique et propositions d'amélioration de l'infrastructure</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Septembre 2023 – Août 2025 (2 ans)</div>
+                    <h3 class="timeline-title">Alternance BAC+2 – Assistant SI</h3>
+                    <div class="timeline-company">SEMAC (Groupe Territoires Réunion)</div>
+                    <ul class="timeline-description">
+                        <li>Assistance aux utilisateurs sur les équipements informatiques (PC, imprimantes, réseau)</li>
+                        <li>Participation à la maintenance du parc informatique</li>
+                        <li>Suivi des tickets et interventions techniques</li>
+                        <li>Collaboration avec l'équipe SI pour le support réseau (Wi-Fi, connexions)</li>
+                        <li>Participation à l'intégration de nouveaux équipements</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Sept – Oct 2022 (4 sem.) et Fév – Mars 2023 (4 sem.)</div>
+                    <h3 class="timeline-title">Stagiaire chez Acor Réunion</h3>
+                    <div class="timeline-company">Acor Réunion</div>
+                    <ul class="timeline-description">
+                        <li>Installation et configuration d'équipements réseau (Livebox, routeur, répéteur Wi-Fi)</li>
+                        <li>Installation de la fibre optique chez différents clients</li>
+                        <li>Réalisation de la soudure de fibre optique</li>
+                        <li>Branchement des clients de la fibre au PMZ</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Avril 2022 (4 semaines)</div>
+                    <h3 class="timeline-title">Stagiaire à la Sorefi de Sainte-Marie</h3>
+                    <div class="timeline-company">Sorefi de Sainte-Marie</div>
+                    <ul class="timeline-description">
+                        <li>Assurer la maintenance des appareils informatiques</li>
+                        <li>Câblage de la baie de brassage de l'entreprise</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Novembre 2021 (4 semaines)</div>
+                    <h3 class="timeline-title">Stagiaire à Megalithe.tech de Sainte-Marie</h3>
+                    <div class="timeline-company">Megalithe.tech de Sainte-Marie</div>
+                    <ul class="timeline-description">
+                        <li>Résolution de problème de licence dans diverses entreprises</li>
+                        <li>Création de Serveur sous Windows Serveur 2016, 2019</li>
+                        <li>Réparation et maintenance d'appareils informatique</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Décembre 2020 (3 sem.) et Juin 2021 (3 sem.)</div>
+                    <h3 class="timeline-title">Stagiaire chez Exper'Elec Réunion</h3>
+                    <div class="timeline-company">Exper'Elec Réunion</div>
+                    <ul class="timeline-description">
+                        <li>Réalisation de câblage électrique en bâtiments</li>
+                        <li>Installation de prises électriques</li>
+                        <li>Installation de compteurs d'électricité</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 03 - FORMATION ========== -->
+        <section class="section" id="formation">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title glitch" data-text="Formation scolaire et diplôme">Formation scolaire et diplôme</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 – 2026 • En cours</div>
+                    <h3 class="timeline-title">Licence 3 – Administration Systèmes, Réseaux &amp; Cloud (ASR&amp;C)</h3>
+                    <div class="timeline-company">CCI EDN • Alternance</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023 – 2025</div>
+                    <h3 class="timeline-title">BAC+2 – Technicien Supérieur Systèmes et Réseaux</h3>
+                    <div class="timeline-company">Alternance chez SEMAC</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 – 2023</div>
+                    <h3 class="timeline-title">Baccalauréat Professionnel Systèmes Numériques</h3>
+                    <div class="timeline-company">Option C : Réseaux Informatiques et Systèmes Communicants – Mention Très bien</div>
+                    <div class="tags">
+                        <span class="tag"><span>Certification Pix</span></span>
+                        <span class="tag"><span>Habilitation Électrique BR</span></span>
+                        <span class="tag"><span>Formation « Premier Témoin Incendie »</span></span>
+                        <span class="tag"><span>Formation « Premier secours »</span></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019</div>
+                    <h3 class="timeline-title">Diplôme national du brevet</h3>
+                    <div class="timeline-company">Série générale</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 04 - COMPÉTENCES & QUALITÉS ========== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title glitch" data-text="Compétences & Qualités">Compétences &amp; Qualités</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="qualities-grid">
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[+]</div><div class="quality-name">Esprit d'équipe</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[?]</div><div class="quality-name">Capacités d'observation</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[=]</div><div class="quality-name">Autonomie</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[*]</div><div class="quality-name">Passionné</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[>]</div><div class="quality-name">Persévérance</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[~]</div><div class="quality-name">Adaptabilité</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[!]</div><div class="quality-name">Sérieux</div></div></div>
+            </div>
+        </section>
+
+        <!-- ========== 05 - PROJET (KreoTech Case Study) ========== -->
+        <section class="section" id="projet">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title glitch" data-text="Projet">Projet</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div class="case-study-logo">KT</div>
+                    <div class="case-study-meta">
+                        <div class="case-study-badge">PROJET ENTREPRENEURIAL • EN COURS</div>
+                        <div class="case-study-title">KreoTech Réunion</div>
+                        <div class="case-study-subtitle">Fondateur – Micro-entreprise IT • La Réunion</div>
+                    </div>
+                </div>
+
+                <div class="case-study-metrics">
+                    <div class="metric">
+                        <span class="metric-value">IT</span>
+                        <span class="metric-label">Services proposés</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">974</span>
+                        <span class="metric-label">Zone d'activité</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">∞</span>
+                        <span class="metric-label">Ambition</span>
+                    </div>
+                </div>
+
+                <ul class="case-study-list">
+                    <li>Montage et assemblage de PC sur mesure pour particuliers</li>
+                    <li>Installation et configuration d'équipements réseau (switch, routeur, Wi-Fi)</li>
+                    <li>Dépannage informatique et assistance technique à domicile</li>
+                    <li>Objectif : développer KreoTech en véritable entreprise de services IT à La Réunion</li>
+                </ul>
+
+                <div class="case-study-footer">
+                    <div class="case-study-status">
+                        <span class="status-dot"></span>
+                        Projet actif — développement en parallèle des études
+                    </div>
+                    <div class="tags" style="margin:0">
+                        <span class="tag"><span>PC Custom</span></span>
+                        <span class="tag"><span>Réseau</span></span>
+                        <span class="tag"><span>Support IT</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 06 - DISTINCTIONS ========== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title glitch" data-text="Distinctions">Distinctions</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">WebCup • Compétition de développement web</div>
+                    <h3 class="timeline-title">🏆 2ème place – WebCup</h3>
+                    <div class="timeline-company">En équipe, sans aucune connaissance préalable en développement</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 07 - LANGUES ========== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">07</span>
+                <h2 class="section-title glitch" data-text="Langues">Langues</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="qualities-grid">
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">FR</div><div class="quality-name">Français</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">EN</div><div class="quality-name">Anglais</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">ES</div><div class="quality-name">Espagnol</div></div></div>
+            </div>
+        </section>
+
+        <!-- ========== 08 - CENTRES D'INTÉRÊT ========== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">08</span>
+                <h2 class="section-title glitch" data-text="Centres d'intérêt">Centres d'intérêt</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="qualities-grid">
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[B]</div><div class="quality-name">Lecture</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[&]</div><div class="quality-name">Bénévolat</div></div></div>
+                <div class="quality-card"><div class="quality-card-inner"><div class="quality-icon">[W]</div><div class="quality-name">Musculation</div></div></div>
+            </div>
+        </section>
+
+        <!-- ========== TERMINAL INTERACTIF ========== -->
+        <section class="terminal-section" id="console">
+            <div class="section-header">
+                <span class="section-number">09</span>
+                <h2 class="section-title glitch" data-text="Console">Console</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-titlebar">
+                    <div class="terminal-dots">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                    </div>
+                    <div class="terminal-title">lessy@kreotech:~$ — bash</div>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="terminal-output" id="terminalOutput">
+                        <div class="terminal-line info">╔══════════════════════════════════════════════╗</div>
+                        <div class="terminal-line info">║  Bienvenue sur le terminal de Lessy Dévaradja ║</div>
+                        <div class="terminal-line info">╚══════════════════════════════════════════════╝</div>
+                        <div class="terminal-line" style="margin-top:0.5rem">Tape <span style="color:var(--accent)">help</span> pour voir les commandes disponibles.</div>
+                    </div>
+                    <div class="terminal-input-row">
+                        <span class="terminal-prompt-prefix">lessy@kreotech:~$</span>
+                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="tap a command...">
+                    </div>
+                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · cat contact · cat kreotech · uptime · clear</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="footer">
+            <div class="footer-content">
+                © 2025 Lessy Dévaradja Jean-Noah • 683 chemin Valentin, 97440 Saint-André, Réunion
+            </div>
+            <div class="footer-links">
+                <a href="mailto:deva.lessy@gmail.com" class="footer-link">deva.lessy@gmail.com</a>
+                <a href="tel:0692200023" class="footer-link">0692 20 00 23</a>
+            </div>
+        </footer>
+
+    </div><!-- /container -->
+
+    <script>
+        /* ============================================================
+           CUSTOM CURSOR
+        ============================================================ */
+        const cursor    = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left    = e.clientX + 'px';
+            cursor.style.top     = e.clientY + 'px';
+            cursorDot.style.left = (e.clientX - 2) + 'px';
+            cursorDot.style.top  = (e.clientY - 2) + 'px';
+        });
+
+        document.querySelectorAll('a, .skill-card, .quality-card, .case-study, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(1.5)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+        });
+
+        /* ============================================================
+           PARTICLES
+        ============================================================ */
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left              = Math.random() * 100 + '%';
+            p.style.width             = (Math.random() * 3 + 1) + 'px';
+            p.style.height            = p.style.width;
+            p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            p.style.animationDelay    = Math.random() * 5 + 's';
+            particlesContainer.appendChild(p);
+        }
+
+        /* ============================================================
+           SCROLL PROGRESS
+        ============================================================ */
+        window.addEventListener('scroll', () => {
+            const progress   = document.querySelector('.scroll-progress');
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.width = (window.scrollY / scrollable * 100) + '%';
+        });
+
+        /* ============================================================
+           SMOOTH SCROLL NAV
+        ============================================================ */
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const href = item.getAttribute('href');
+                if (!href || href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        /* ============================================================
+           SKILL CARD MOUSE GLOW
+        ============================================================ */
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+                card.style.setProperty('--mouse-y', ((e.clientY - rect.top)  / rect.height * 100) + '%');
+            });
+        });
+
+        /* ============================================================
+           INTERSECTION OBSERVER — SECTION REVEAL
+        ============================================================ */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+        document.querySelectorAll('.section, .terminal-section').forEach(s => observer.observe(s));
+
+        /* ============================================================
+           THEME TOGGLE
+        ============================================================ */
+        const themeBtn = document.getElementById('themeBtn');
+        const html     = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeBtn.textContent = isDark ? '◑ DARK' : '◐ LIGHT';
+        });
+
+        /* ============================================================
+           LIVE STATUS DASHBOARD — simulation temps réel
+        ============================================================ */
+        function animateStatus() {
+            const cpuBar  = document.getElementById('cpuBar');
+            const cpuVal  = document.getElementById('cpuVal');
+            const connVal = document.getElementById('connVal');
+            const ticketVal = document.getElementById('ticketVal');
+
+            // Simulate varying CPU load
+            let cpu       = 42;
+            let conn      = 7;
+            let tickets   = 0;
+
+            // Animate tickets counter
+            const targetTickets = 247;
+            const ticketInterval = setInterval(() => {
+                tickets = Math.min(tickets + Math.ceil(Math.random() * 12), targetTickets);
+                if (ticketVal) ticketVal.textContent = tickets;
+                if (tickets >= targetTickets) clearInterval(ticketInterval);
+            }, 30);
+
+            // Animate CPU
+            setInterval(() => {
+                cpu  = Math.max(20, Math.min(80, cpu + (Math.random() - 0.5) * 12));
+                conn = Math.max(3,  Math.min(15, conn + Math.round((Math.random() - 0.5) * 2)));
+                if (cpuBar)  cpuBar.style.width  = cpu.toFixed(0) + '%';
+                if (cpuVal)  cpuVal.textContent  = cpu.toFixed(0) + '%';
+                if (connVal) connVal.textContent  = conn;
+                cpuBar.style.background = cpu > 65 ? 'var(--accent)' : '#22c55e';
+            }, 1800);
+        }
+
+        // Start status animation when visible
+        const statusObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { animateStatus(); statusObs.disconnect(); } });
+        }, { threshold: 0.3 });
+
+        const dash = document.getElementById('statusDashboard');
+        if (dash) statusObs.observe(dash);
+
+        /* ============================================================
+           TERMINAL — Commandes disponibles
+        ============================================================ */
+        const COMMANDS = {
+            help: () => `
+<span style="color:var(--accent)">Commandes disponibles :</span>
+  whoami          — identité du système
+  ls skills       — liste les compétences
+  ls formations   — parcours scolaire
+  cat contact     — coordonnées
+  cat kreotech    — case study KreoTech
+  cat 20min       — initiative "20 minutes SI"
+  uptime          — temps de service
+  clear           — effacer la console
+  neofetch        — infos système complètes`,
+
+            whoami: () => `<span style="color:#a1efbd">lessy-devaradja-jean-noah</span>
+Admin Systèmes &amp; Réseaux | L3 ASR&amp;C | Réunion 974
+Alternant @ SEMAC • Fondateur KreoTech`,
+
+            'ls skills': () => `<span style="color:#60a5fa">drwxr-xr-x</span>  systemes/
+<span style="color:#60a5fa">drwxr-xr-x</span>  reseaux/
+<span style="color:#60a5fa">drwxr-xr-x</span>  securite/
+<span style="color:#60a5fa">drwxr-xr-x</span>  support-n1-n2/
+<span style="color:#60a5fa">drwxr-xr-x</span>  windows-server/
+<span style="color:#60a5fa">drwxr-xr-x</span>  active-directory/
+<span style="color:#60a5fa">drwxr-xr-x</span>  fibre-optique/`,
+
+            'ls formations': () => `<span style="color:#a1efbd">[2025-2026]</span> Licence 3 ASR&amp;C — CCI EDN (en cours)
+<span style="color:#a1efbd">[2023-2025]</span> BTS SRS — Alternance SEMAC
+<span style="color:#a1efbd">[2019-2023]</span> Bac Pro Systèmes Numériques — Mention TB
+<span style="color:#a1efbd">[2019]</span>      DNB — Série générale`,
+
+            'cat contact': () => `<span style="color:var(--accent)">╔═══════════════════════════════╗
+║        CONTACT                ║
+╚═══════════════════════════════╝</span>
+📧  deva.lessy@gmail.com
+📞  0692 20 00 23
+📍  683 chemin Valentin, 97440 Saint-André
+🚗  Permis B`,
+
+            'cat kreotech': () => `<span style="color:var(--accent)">╔═══════════════════════════════╗
+║     KREOTECH RÉUNION          ║
+╚═══════════════════════════════╝</span>
+Status  : <span style="color:#22c55e">● ACTIF</span>
+Type    : Micro-entreprise IT
+Zone    : La Réunion (974)
+
+Services :
+  ▸ Montage PC sur mesure
+  ▸ Config réseau (switch, routeur, Wi-Fi)
+  ▸ Dépannage &amp; assistance à domicile
+
+Objectif : devenir une vraie ESN locale.`,
+
+            'cat 20min': () => `<span style="color:var(--accent)">╔═══════════════════════════════════╗
+║   INITIATIVE "20 MINUTES SI"     ║
+╚═══════════════════════════════════╝</span>
+<span style="color:#a1efbd">Format</span>  : mini-formation IT hebdomadaire
+<span style="color:#a1efbd">Public</span>  : utilisateurs non-techniques SEMAC
+<span style="color:#a1efbd">Durée</span>   : 20 minutes chrono
+
+Thèmes abordés :
+  ▸ Cybersécurité &amp; mots de passe forts
+  ▸ Hameçonnage — comment le détecter
+  ▸ Bonnes pratiques bureau &amp; données
+  ▸ Utilisation avancée des outils métier
+
+Impact : réduction des tickets récurrents
+         autonomie utilisateurs améliorée`,
+
+            uptime: () => {
+                const start = new Date('2023-09-01');
+                const now   = new Date();
+                const diff  = now - start;
+                const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = now.getHours();
+                const mins  = now.getMinutes();
+                return `<span style="color:#a1efbd">${days} days, ${hours}h${String(mins).padStart(2,'0')}m</span>  up since 2023-09-01 (alternance SEMAC)
+load average: <span style="color:var(--accent)">0.42, 0.38, 0.31</span>`;
+            },
+
+            clear: () => '__CLEAR__',
+
+            neofetch: () => `<span style="color:var(--accent)">
+    .---.     </span>  <span style="color:var(--text-primary)">lessy@kreotech</span>
+   /     \\    <span style="color:var(--text-tertiary)">──────────────────────────</span>
+  | (•) (•)|  <span style="color:var(--accent)">OS</span><span style="color:var(--text-secondary)">       : Admin Systèmes &amp; Réseaux</span>
+  |   ▽   |   <span style="color:var(--accent)">Host</span><span style="color:var(--text-secondary)">     : SEMAC • La Réunion</span>
+   \\ ___ /    <span style="color:var(--accent)">Kernel</span><span style="color:var(--text-secondary)">   : L3 ASR&amp;C 2025</span>
+    '---'     <span style="color:var(--accent)">Uptime</span><span style="color:var(--text-secondary)">   : 3+ ans d'expérience</span>
+              <span style="color:var(--accent)">Shell</span><span style="color:var(--text-secondary)">    : Space Mono / Terminal</span>
+              <span style="color:var(--accent)">Skills</span><span style="color:var(--text-secondary)">   : Windows Server, AD, TCP/IP, VLAN</span>
+              <span style="color:var(--accent)">Project</span><span style="color:var(--text-secondary)">  : KreoTech Réunion</span>
+              <span style="color:var(--accent)">Colors</span>   <span style="color:#f97316">███</span><span style="color:#fb923c">███</span><span style="color:#fdba74">███</span>`,
+        };
+
+        const terminalInput  = document.getElementById('terminalInput');
+        const terminalOutput = document.getElementById('terminalOutput');
+        const terminalBody   = document.getElementById('terminalBody');
+        let   cmdHistory     = [];
+        let   histIndex      = -1;
+
+        function appendToTerminal(promptText, outputHTML) {
+            // Print the command line
+            const cmdLine = document.createElement('div');
+            cmdLine.className = 'terminal-line';
+            cmdLine.style.marginTop = '0.5rem';
+            cmdLine.innerHTML = `<span style="color:var(--accent)">lessy@kreotech:~$</span> <span class="cmd">${escapeHtml(promptText)}</span>`;
+            terminalOutput.appendChild(cmdLine);
+
+            // Print output
+            if (outputHTML) {
+                const outDiv = document.createElement('div');
+                outDiv.className = 'terminal-line result';
+                outDiv.style.marginTop = '0.3rem';
+                outDiv.innerHTML = outputHTML;
+                terminalOutput.appendChild(outDiv);
+            }
+
+            // Scroll to bottom
+            setTimeout(() => { terminalBody.scrollTop = terminalBody.scrollHeight; }, 50);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const raw = terminalInput.value.trim();
+                if (!raw) return;
+
+                cmdHistory.unshift(raw);
+                histIndex = -1;
+                terminalInput.value = '';
+
+                const cmd = raw.toLowerCase();
+                const handler = COMMANDS[cmd];
+
+                if (handler) {
+                    const result = handler();
+                    if (result === '__CLEAR__') {
+                        terminalOutput.innerHTML = '';
+                    } else {
+                        appendToTerminal(raw, result);
+                    }
+                } else {
+                    appendToTerminal(raw, `<span style="color:#f87171">bash: ${escapeHtml(raw)}: commande introuvable. Tape <span style="color:var(--accent)">help</span> pour la liste.</span>`);
+                }
+            }
+
+            // History navigation
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                histIndex = Math.min(histIndex + 1, cmdHistory.length - 1);
+                terminalInput.value = cmdHistory[histIndex] || '';
+            }
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                histIndex = Math.max(histIndex - 1, -1);
+                terminalInput.value = histIndex === -1 ? '' : cmdHistory[histIndex];
+            }
+        });
+
+        // Click anywhere in terminal to focus input
+        document.getElementById('terminalBody').addEventListener('click', () => {
+            terminalInput.focus();
+        });
+
+    </script>
+</body>
+</html>
