@@ -1203,6 +1203,98 @@
         }
 
         /* ============================================================
+           PROJECTS GRID — 2 colonnes
+        ============================================================ */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* KreoLocation — accent secondaire teal */
+        .case-study.kreolocation {
+            border-color: rgba(20, 184, 166, 0.2);
+        }
+
+        .case-study.kreolocation::before {
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.07) 0%, transparent 70%);
+        }
+
+        .case-study.kreolocation:hover {
+            border-color: #14b8a6;
+            box-shadow: 0 20px 60px rgba(20, 184, 166, 0.15);
+        }
+
+        .case-study.kreolocation .case-study-logo {
+            background: #14b8a6;
+        }
+
+        .case-study.kreolocation .case-study-badge {
+            background: rgba(20, 184, 166, 0.15);
+            border-color: rgba(20, 184, 166, 0.3);
+            color: #14b8a6;
+        }
+
+        .case-study.kreolocation .metric-value {
+            color: #14b8a6;
+        }
+
+        .case-study.kreolocation .case-study-list li::before {
+            color: #14b8a6;
+        }
+
+        .case-study.kreolocation .case-study-footer {
+            border-top-color: rgba(20, 184, 166, 0.1);
+        }
+
+        .case-study.kreolocation .tag {
+            border-color: #14b8a6;
+            color: #14b8a6;
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .case-study.kreolocation .tag::before {
+            background: #14b8a6;
+        }
+
+        .case-study.kreolocation .tag:hover {
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+        }
+
+        .case-study-website {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: 1px solid #14b8a6;
+            color: #14b8a6;
+            transition: all 0.3s ease;
+            letter-spacing: 0.03em;
+        }
+
+        .case-study-website:hover {
+            background: #14b8a6;
+            color: var(--bg-primary);
+            box-shadow: 0 0 16px rgba(20, 184, 166, 0.35);
+        }
+
+        .case-study-website::before {
+            content: '↗';
+        }
+
+        /* ============================================================
            FOOTER
         ============================================================ */
         .footer {
@@ -1534,58 +1626,113 @@
             </div>
         </section>
 
-        <!-- ========== 05 - PROJET (KreoTech Case Study) ========== -->
+        <!-- ========== 05 - PROJETS (KreoTech + KreoLocation) ========== -->
         <section class="section" id="projet">
             <div class="section-header">
                 <span class="section-number">05</span>
-                <h2 class="section-title glitch" data-text="Projet">Projet</h2>
+                <h2 class="section-title glitch" data-text="Projets">Projets</h2>
                 <div class="section-line"></div>
             </div>
 
-            <div class="case-study">
-                <div class="case-study-header">
-                    <div class="case-study-logo">KT</div>
-                    <div class="case-study-meta">
-                        <div class="case-study-badge">PROJET ENTREPRENEURIAL • EN COURS</div>
-                        <div class="case-study-title">KreoTech Réunion</div>
-                        <div class="case-study-subtitle">Fondateur – Micro-entreprise IT • La Réunion</div>
+            <div class="projects-grid">
+
+                <!-- KreoTech -->
+                <div class="case-study">
+                    <div class="case-study-header">
+                        <div class="case-study-logo">KT</div>
+                        <div class="case-study-meta">
+                            <div class="case-study-badge">PROJET CLOS • DURÉE : 6 MOIS</div>
+                            <div class="case-study-title">KreoTech Réunion</div>
+                            <div class="case-study-subtitle">Fondateur – Micro-entreprise IT • La Réunion</div>
+                        </div>
+                    </div>
+
+                    <div class="case-study-metrics">
+                        <div class="metric">
+                            <span class="metric-value">IT</span>
+                            <span class="metric-label">Services proposés</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">974</span>
+                            <span class="metric-label">Zone d'activité</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">∞</span>
+                            <span class="metric-label">Ambition</span>
+                        </div>
+                    </div>
+
+                    <ul class="case-study-list">
+                        <li>Montage et assemblage de PC sur mesure pour particuliers</li>
+                        <li>Installation et configuration d'équipements réseau (switch, routeur, Wi-Fi)</li>
+                        <li>Dépannage informatique et assistance technique à domicile</li>
+                        <li>Objectif : développer KreoTech en véritable entreprise de services IT à La Réunion</li>
+                    </ul>
+
+                    <div class="case-study-footer">
+                        <div class="case-study-status">
+                            <span class="status-dot" style="background:#71717a; animation:none;"></span>
+                            Projet clos — expérience de 6 mois
+                        </div>
+                        <div class="tags" style="margin:0">
+                            <span class="tag"><span>PC Custom</span></span>
+                            <span class="tag"><span>Réseau</span></span>
+                            <span class="tag"><span>Support IT</span></span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="case-study-metrics">
-                    <div class="metric">
-                        <span class="metric-value">IT</span>
-                        <span class="metric-label">Services proposés</span>
+                <!-- KreoLocation -->
+                <div class="case-study kreolocation">
+                    <div class="case-study-header">
+                        <div class="case-study-logo">KL</div>
+                        <div class="case-study-meta">
+                            <div class="case-study-badge">PROJET ENTREPRENEURIAL • JUIN 2026</div>
+                            <div class="case-study-title">KreoLocation</div>
+                            <div class="case-study-subtitle">Fondateur – Conciergerie &amp; Location Automobile • La Réunion</div>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-value">974</span>
-                        <span class="metric-label">Zone d'activité</span>
+
+                    <div class="case-study-metrics">
+                        <div class="metric">
+                            <span class="metric-value">AUTO</span>
+                            <span class="metric-label">Secteur</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">75%</span>
+                            <span class="metric-label">Part propriétaire</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">.re</span>
+                            <span class="metric-label">Domaine local</span>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-value">∞</span>
-                        <span class="metric-label">Ambition</span>
+
+                    <ul class="case-study-list">
+                        <li>Création d'une agence de conciergerie et location automobile à La Réunion (micro-entreprise)</li>
+                        <li>Développement complet du site web — HTML/CSS/JS vanilla, GitHub Pages, domaine .re</li>
+                        <li>Intégration EmailJS + Cloudinary pour la gestion des prospects</li>
+                        <li>Référencement SEO — Google Search Console, sitemap, Google My Business</li>
+                        <li>Modèle mandataire — 75% propriétaire / 25% agence, zéro risque partenaires</li>
+                    </ul>
+
+                    <div class="case-study-footer">
+                        <div class="case-study-status">
+                            <span class="status-dot" style="background:#14b8a6; animation: blink 2s ease-in-out infinite;"></span>
+                            Lancé — Juin 2026
+                        </div>
+                        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+                            <a href="https://kreolocation.re" target="_blank" rel="noopener" class="case-study-website">kreolocation.re</a>
+                            <div class="tags" style="margin:0">
+                                <span class="tag"><span>Location Auto</span></span>
+                                <span class="tag"><span>SEO</span></span>
+                                <span class="tag"><span>Web Dev</span></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <ul class="case-study-list">
-                    <li>Montage et assemblage de PC sur mesure pour particuliers</li>
-                    <li>Installation et configuration d'équipements réseau (switch, routeur, Wi-Fi)</li>
-                    <li>Dépannage informatique et assistance technique à domicile</li>
-                    <li>Objectif : développer KreoTech en véritable entreprise de services IT à La Réunion</li>
-                </ul>
-
-                <div class="case-study-footer">
-                    <div class="case-study-status">
-                        <span class="status-dot"></span>
-                        Projet actif — développement en parallèle des études
-                    </div>
-                    <div class="tags" style="margin:0">
-                        <span class="tag"><span>PC Custom</span></span>
-                        <span class="tag"><span>Réseau</span></span>
-                        <span class="tag"><span>Support IT</span></span>
-                    </div>
-                </div>
-            </div>
+            </div><!-- /projects-grid -->
         </section>
 
         <!-- ========== 06 - DISTINCTIONS ========== -->
@@ -1596,6 +1743,15 @@
                 <div class="section-line"></div>
             </div>
             <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">CyberCup Océan Indien • Compétition de cybersécurité</div>
+                    <h3 class="timeline-title">🥇 1ers de l'île – CyberCup Océan Indien</h3>
+                    <div class="timeline-company">Équipe FayaWall — 1ère place parmi toutes les équipes réunionnaises</div>
+                    <ul class="timeline-description" style="margin-top:0.75rem">
+                        <li>Équipe de 4 personnes sans connaissance préalable en cybersécurité</li>
+                        <li>Apprentissage sur le tas, entraide collective et utilisation de l'IA comme outil d'apprentissage</li>
+                    </ul>
+                </div>
                 <div class="timeline-item">
                     <div class="timeline-date">WebCup • Compétition de développement web</div>
                     <h3 class="timeline-title">🏆 2ème place – WebCup</h3>
@@ -1660,7 +1816,7 @@
                         <span class="terminal-prompt-prefix">lessy@kreotech:~$</span>
                         <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="tap a command...">
                     </div>
-                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · cat contact · cat kreotech · uptime · clear</div>
+                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · cat contact · cat kreotech · cat kreolocation · uptime · clear</div>
                 </div>
             </div>
         </section>
@@ -1820,6 +1976,7 @@
   ls formations   — parcours scolaire
   cat contact     — coordonnées
   cat kreotech    — case study KreoTech
+  cat kreolocation — projet KreoLocation
   cat 20min       — initiative "20 minutes SI"
   uptime          — temps de service
   clear           — effacer la console
@@ -1827,7 +1984,7 @@
 
             whoami: () => `<span style="color:#a1efbd">lessy-devaradja-jean-noah</span>
 Admin Systèmes &amp; Réseaux | L3 ASR&amp;C | Réunion 974
-Alternant @ SEMAC • Fondateur KreoTech`,
+Alternant @ SEMAC • Fondateur KreoTech &amp; KreoLocation`,
 
             'ls skills': () => `<span style="color:#60a5fa">drwxr-xr-x</span>  systemes/
 <span style="color:#60a5fa">drwxr-xr-x</span>  reseaux/
@@ -1849,6 +2006,25 @@ Alternant @ SEMAC • Fondateur KreoTech`,
 📞  0692 20 00 23
 📍  683 chemin Valentin, 97440 Saint-André
 🚗  Permis B`,
+
+            'cat kreolocation': () => `<span style="color:#14b8a6">╔══════════════════════════════════════╗
+║     KREOLOCATION — Réunion           ║
+╚══════════════════════════════════════╝</span>
+Status  : <span style="color:#22c55e">● ACTIF</span> — Lancé Juin 2026
+URL     : <span style="color:#14b8a6">kreolocation.re</span>
+Type    : Conciergerie &amp; Location Automobile
+
+Stack web :
+  ▸ HTML / CSS / JS vanilla
+  ▸ GitHub Pages + domaine .re
+  ▸ EmailJS + Cloudinary
+
+Business :
+  ▸ Modèle mandataire — 75% propriétaire / 25% agence
+  ▸ Zéro risque pour les partenaires
+  ▸ SEO — Search Console, sitemap, Google My Business
+
+<span style="color:#14b8a6">Projet familial — mes parents me soutiennent 🙏</span>`,
 
             'cat kreotech': () => `<span style="color:var(--accent)">╔═══════════════════════════════╗
 ║     KREOTECH RÉUNION          ║
@@ -1902,7 +2078,7 @@ load average: <span style="color:var(--accent)">0.42, 0.38, 0.31</span>`;
     '---'     <span style="color:var(--accent)">Uptime</span><span style="color:var(--text-secondary)">   : 3+ ans d'expérience</span>
               <span style="color:var(--accent)">Shell</span><span style="color:var(--text-secondary)">    : Space Mono / Terminal</span>
               <span style="color:var(--accent)">Skills</span><span style="color:var(--text-secondary)">   : Windows Server, AD, TCP/IP, VLAN</span>
-              <span style="color:var(--accent)">Project</span><span style="color:var(--text-secondary)">  : KreoTech Réunion</span>
+              <span style="color:var(--accent)">Projects</span><span style="color:var(--text-secondary)"> : KreoTech + KreoLocation</span>
               <span style="color:var(--accent)">Colors</span>   <span style="color:#f97316">███</span><span style="color:#fb923c">███</span><span style="color:#fdba74">███</span>`,
         };
 
