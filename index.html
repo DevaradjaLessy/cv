@@ -387,7 +387,9 @@
         .hero h1 {
             font-size: clamp(3rem, 10vw, 8rem);
             font-weight: 800;
-            line-height: 0.9;
+            /* 1.05 mini : sous 1.0 l'accent du É de DÉVARADJA
+               remonte dans la ligne du dessus et la touche */
+            line-height: 1.05;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
             -webkit-background-clip: text;
@@ -777,6 +779,130 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.7;
+        }
+
+        /* ============================================================
+           CERTIFICATIONS & ATTESTATIONS
+        ============================================================ */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(39,39,42,0.4) 100%);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cert-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 40px rgba(249, 115, 22, 0.15);
+        }
+
+        /* Carte mise en avant — occupe toute la largeur */
+        .cert-card.cert-featured {
+            grid-column: 1 / -1;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 16px 16px 0;
+            background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(249,115,22,0.02) 100%);
+            padding: 2.2rem 2.4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-card.cert-featured::before {
+            content: '🛡';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4.5rem;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .cert-badge {
+            display: inline-block;
+            padding: 0.25rem 0.8rem;
+            background: rgba(249,115,22,0.15);
+            border: 1px solid rgba(249,115,22,0.4);
+            color: var(--accent);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.9rem;
+        }
+
+        .cert-card.cert-featured .cert-badge {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .cert-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            line-height: 1.35;
+        }
+
+        .cert-card.cert-featured .cert-name { font-size: 1.4rem; }
+
+        .cert-issuer {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Mode clair : fond clair franc, sinon le dégradé sombre hérité
+           écrase le texte dans le coin bas-droit */
+        [data-theme="light"] .cert-card {
+            background: linear-gradient(135deg, #ffffff 0%, rgba(244,244,245,0.95) 100%);
+        }
+
+        [data-theme="light"] .cert-card.cert-featured {
+            background: linear-gradient(135deg, rgba(249,115,22,0.10) 0%, rgba(249,115,22,0.03) 100%);
+        }
+
+        .cert-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+            max-width: 68ch;
+        }
+
+        .cert-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1.4rem;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+        }
+
+        .cert-link::before { content: '↗'; }
+
+        .cert-link:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            box-shadow: 0 0 16px var(--glow);
         }
 
         /* ============================================================
@@ -1341,6 +1467,9 @@
                 top: 1rem;
                 right: 1rem;
                 padding: 0.75rem 1rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                max-width: calc(100vw - 2rem);
             }
         }
 
@@ -1352,7 +1481,10 @@
             .timeline-item { padding-left: 1rem; }
             .timeline-item::before { left: -2.5rem; }
 
-            .skills-grid, .qualities-grid { grid-template-columns: 1fr; }
+            .skills-grid, .qualities-grid, .certs-grid { grid-template-columns: 1fr; }
+
+            .cert-card.cert-featured { padding: 1.8rem; }
+            .cert-card.cert-featured::before { display: none; }
 
             .nav { display: none; }
 
@@ -1382,6 +1514,7 @@
         <a href="#competences" class="nav-item">compétences</a>
         <a href="#experience"  class="nav-item">expérience</a>
         <a href="#formation"   class="nav-item">formation</a>
+        <a href="#certifications" class="nav-item">certifs</a>
         <a href="#projet"      class="nav-item">projet</a>
         <a href="#console"     class="nav-item">console</a>
         <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">◐ LIGHT</button>
@@ -1403,7 +1536,7 @@
 
             <h1>LESSY<br>DÉVARADJA<br>JEAN-NOAH</h1>
 
-            <h2>Admin Systèmes &amp; Réseaux • Infrastructure IT</h2>
+            <h2>Admin Systèmes, Réseaux et Cybersécurité • Infrastructure IT</h2>
 
             <p class="hero-description">
                 Actuellement en alternance chez SEMAC comme Assistant SI, j'ai développé de bonnes bases en administration systèmes et réseaux.<br><br>
@@ -1478,6 +1611,7 @@
                         <li>FreshService — gestion des tickets &amp; incidents</li>
                         <li>GLPI — gestion de parc &amp; ticketing</li>
                         <li>Cybersécurité (mots de passe, antivirus)</li>
+                        <li>EBIOS Risk Manager — analyse de risques (méthode ANSSI)</li>
                     </ul>
 
                     <!-- Bloc "20 minutes SI" -->
@@ -1532,7 +1666,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-date">Septembre 2025 – Septembre 2026 (1 an) • En cours</div>
-                    <h3 class="timeline-title">Alternance L3 – Assistant SI</h3>
+                    <h3 class="timeline-title">Alternance BAC+3 – Assistant SI</h3>
                     <div class="timeline-company">SEMAC (Groupe Territoires Réunion)</div>
                     <ul class="timeline-description">
                         <li>Administration des comptes, groupes et droits via Active Directory (GPO, OUs)</li>
@@ -1615,8 +1749,8 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">2025 – 2026 • En cours</div>
-                    <h3 class="timeline-title">Licence 3 – Administration Systèmes, Réseaux &amp; Cloud (ASR&amp;C)</h3>
-                    <div class="timeline-company">CCI EDN • Alternance</div>
+                    <h3 class="timeline-title">BAC+3 – Administrateur Systèmes, Réseaux et Cybersécurité</h3>
+                    <div class="timeline-company">CCI EDN • Alternance • Titre professionnel de niveau 6 (Bac+3) en 1 an</div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2023 – 2025</div>
@@ -1627,12 +1761,6 @@
                     <div class="timeline-date">2019 – 2023</div>
                     <h3 class="timeline-title">Baccalauréat Professionnel Systèmes Numériques</h3>
                     <div class="timeline-company">Option C : Réseaux Informatiques et Systèmes Communicants – Mention Très bien</div>
-                    <div class="tags">
-                        <span class="tag"><span>Certification Pix</span></span>
-                        <span class="tag"><span>Habilitation Électrique BR</span></span>
-                        <span class="tag"><span>Formation « Premier Témoin Incendie »</span></span>
-                        <span class="tag"><span>Formation « Premier secours »</span></span>
-                    </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2019</div>
@@ -1642,10 +1770,58 @@
             </div>
         </section>
 
-        <!-- ========== 04 - COMPÉTENCES & QUALITÉS ========== -->
-        <section class="section">
+        <!-- ========== 04 - CERTIFICATIONS & ATTESTATIONS ========== -->
+        <section class="section" id="certifications">
             <div class="section-header">
                 <span class="section-number">04</span>
+                <h2 class="section-title glitch" data-text="Certifications & Attestations">Certifications &amp; Attestations</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="certs-grid">
+
+                <!-- EBIOS Risk Manager — mise en avant -->
+                <div class="cert-card cert-featured">
+                    <div class="cert-badge">AOÛT 2026 • CLUB EBIOS</div>
+                    <div class="cert-name">Formation EBIOS Risk Manager</div>
+                    <div class="cert-issuer">Club EBIOS • MOOC « Introduction à la méthode EBIOS Risk Manager » — 3 h, à distance</div>
+                    <p class="cert-desc">
+                        EBIOS Risk Manager est la méthode d'analyse et de gestion des risques numériques de l'<strong>ANSSI</strong>. Cette formation m'a apporté le cadre méthodologique qui complète ma pratique de terrain : identifier les valeurs métier et les événements redoutés, cartographier les sources de risque, construire des scénarios d'attaque et prioriser les mesures de sécurité. Un prolongement direct de ma 1ʳᵉ place à la CyberCup Océan Indien et de mes sessions de sensibilisation « 20 minutes SI ».
+                    </p>
+                    <a href="certifications/ebios-risk-manager-2026.pdf" target="_blank" rel="noopener" class="cert-link">Voir l'attestation</a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">NUMÉRIQUE</div>
+                    <div class="cert-name">Certification Pix</div>
+                    <div class="cert-issuer">Compétences numériques</div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">ÉLECTRIQUE</div>
+                    <div class="cert-name">Habilitation Électrique BR</div>
+                    <div class="cert-issuer">Chargé d'intervention BT générale</div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">SÉCURITÉ</div>
+                    <div class="cert-name">Premier Témoin Incendie</div>
+                    <div class="cert-issuer">Formation sécurité incendie</div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">SECOURISME</div>
+                    <div class="cert-name">Premiers Secours</div>
+                    <div class="cert-issuer">Gestes de premiers secours</div>
+                </div>
+
+            </div><!-- /certs-grid -->
+        </section><!-- /certifications -->
+
+        <!-- ========== 05 - COMPÉTENCES & QUALITÉS ========== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">05</span>
                 <h2 class="section-title glitch" data-text="Compétences & Qualités">Compétences &amp; Qualités</h2>
                 <div class="section-line"></div>
             </div>
@@ -1660,10 +1836,10 @@
             </div>
         </section>
 
-        <!-- ========== 05 - PROJETS (KreoTech + KreoLocation) ========== -->
+        <!-- ========== 06 - PROJETS (KreoTech + KreoLocation) ========== -->
         <section class="section" id="projet">
             <div class="section-header">
-                <span class="section-number">05</span>
+                <span class="section-number">06</span>
                 <h2 class="section-title glitch" data-text="Projets">Projets</h2>
                 <div class="section-line"></div>
             </div>
@@ -1769,10 +1945,10 @@
             </div><!-- /projects-grid -->
         </section>
 
-        <!-- ========== 06 - DISTINCTIONS ========== -->
+        <!-- ========== 07 - DISTINCTIONS ========== -->
         <section class="section">
             <div class="section-header">
-                <span class="section-number">06</span>
+                <span class="section-number">07</span>
                 <h2 class="section-title glitch" data-text="Distinctions">Distinctions</h2>
                 <div class="section-line"></div>
             </div>
@@ -1794,10 +1970,10 @@
             </div>
         </section>
 
-        <!-- ========== 07 - LANGUES ========== -->
+        <!-- ========== 08 - LANGUES ========== -->
         <section class="section">
             <div class="section-header">
-                <span class="section-number">07</span>
+                <span class="section-number">08</span>
                 <h2 class="section-title glitch" data-text="Langues">Langues</h2>
                 <div class="section-line"></div>
             </div>
@@ -1808,10 +1984,10 @@
             </div>
         </section>
 
-        <!-- ========== 08 - CENTRES D'INTÉRÊT ========== -->
+        <!-- ========== 09 - CENTRES D'INTÉRÊT ========== -->
         <section class="section">
             <div class="section-header">
-                <span class="section-number">08</span>
+                <span class="section-number">09</span>
                 <h2 class="section-title glitch" data-text="Centres d'intérêt">Centres d'intérêt</h2>
                 <div class="section-line"></div>
             </div>
@@ -1825,7 +2001,7 @@
         <!-- ========== TERMINAL INTERACTIF ========== -->
         <section class="terminal-section" id="console">
             <div class="section-header">
-                <span class="section-number">09</span>
+                <span class="section-number">10</span>
                 <h2 class="section-title glitch" data-text="Console">Console</h2>
                 <div class="section-line"></div>
             </div>
@@ -1850,7 +2026,7 @@
                         <span class="terminal-prompt-prefix">lessy@kreotech:~$</span>
                         <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="tap a command...">
                     </div>
-                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · cat contact · cat kreotech · cat kreolocation · uptime · clear</div>
+                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · ls certifs · cat ebios · cat contact · cat kreolocation · uptime · clear</div>
                 </div>
             </div>
         </section>
@@ -2008,6 +2184,8 @@
   whoami          — identité du système
   ls skills       — liste les compétences
   ls formations   — parcours scolaire
+  ls certifs      — certifications &amp; attestations
+  cat ebios       — formation EBIOS Risk Manager
   cat contact     — coordonnées
   cat kreotech    — case study KreoTech
   cat kreolocation — projet KreoLocation
@@ -2017,7 +2195,8 @@
   neofetch        — infos système complètes`,
 
             whoami: () => `<span style="color:#a1efbd">lessy-devaradja-jean-noah</span>
-Admin Systèmes &amp; Réseaux | L3 ASR&amp;C | Réunion 974
+Administrateur Systèmes, Réseaux &amp; Cybersécurité (Bac+3, en cours)
+Réunion 974
 Alternant @ SEMAC • Fondateur KreoTech &amp; KreoLocation`,
 
             'ls skills': () => `<span style="color:#60a5fa">drwxr-xr-x</span>  systemes/
@@ -2035,10 +2214,39 @@ Alternant @ SEMAC • Fondateur KreoTech &amp; KreoLocation`,
 <span style="color:#60a5fa">drwxr-xr-x</span>  glpi/
 <span style="color:#60a5fa">-rw-r--r--</span>  cahiers-des-charges.md`,
 
-            'ls formations': () => `<span style="color:#a1efbd">[2025-2026]</span> Licence 3 ASR&amp;C — CCI EDN (en cours)
-<span style="color:#a1efbd">[2023-2025]</span> BTS SRS — Alternance SEMAC
+            'ls formations': () => `<span style="color:#a1efbd">[2025-2026]</span> Titre Admin. Systèmes, Réseaux &amp; Cybersécurité
+            Niveau 6 (Bac+3) — CCI EDN (en cours)
+<span style="color:#a1efbd">[2023-2025]</span> Technicien Supérieur Systèmes et Réseaux (Bac+2)
+            Alternance SEMAC
 <span style="color:#a1efbd">[2019-2023]</span> Bac Pro Systèmes Numériques — Mention TB
 <span style="color:#a1efbd">[2019]</span>      DNB — Série générale`,
+
+            'ls certifs': () => `<span style="color:#a1efbd">[2026]</span> Formation EBIOS Risk Manager — Club EBIOS <span style="color:var(--accent)">★</span>
+<span style="color:#a1efbd">[----]</span> Certification Pix — compétences numériques
+<span style="color:#a1efbd">[----]</span> Habilitation Électrique BR
+<span style="color:#a1efbd">[----]</span> Premier Témoin Incendie
+<span style="color:#a1efbd">[----]</span> Premiers Secours
+
+<span style="color:var(--text-tertiary)">Tape</span> <span style="color:var(--accent)">cat ebios</span> <span style="color:var(--text-tertiary)">pour le détail.</span>`,
+
+            'ls certifications': () => COMMANDS['ls certifs'](),
+
+            'cat ebios': () => `<span style="color:var(--accent)">╔══════════════════════════════════════╗
+║   EBIOS RISK MANAGER — Club EBIOS    ║
+╚══════════════════════════════════════╝</span>
+Type     : MOOC « Introduction à la méthode EBIOS RM »
+Émetteur : <span style="color:#a1efbd">Club EBIOS</span> — méthode de l'<span style="color:#a1efbd">ANSSI</span>
+Durée    : 3 h, à distance
+Obtenu   : <span style="color:#22c55e">14/08/2026</span> — Paris
+
+Ce que ça couvre :
+  ▸ Valeurs métier &amp; événements redoutés
+  ▸ Cartographie des sources de risque
+  ▸ Scénarios stratégiques &amp; opérationnels
+  ▸ Traitement du risque &amp; mesures de sécurité
+
+<span style="color:var(--text-tertiary)">Le cadre méthodo qui complète la pratique terrain
+(CyberCup 974 · sensibilisation "20 minutes SI").</span>`,
 
             'cat contact': () => `<span style="color:var(--accent)">╔═══════════════════════════════╗
 ║        CONTACT                ║
@@ -2115,7 +2323,7 @@ load average: <span style="color:var(--accent)">0.42, 0.38, 0.31</span>`;
    /     \\    <span style="color:var(--text-tertiary)">──────────────────────────</span>
   | (•) (•)|  <span style="color:var(--accent)">OS</span><span style="color:var(--text-secondary)">       : Admin Systèmes &amp; Réseaux</span>
   |   ▽   |   <span style="color:var(--accent)">Host</span><span style="color:var(--text-secondary)">     : SEMAC • La Réunion</span>
-   \\ ___ /    <span style="color:var(--accent)">Kernel</span><span style="color:var(--text-secondary)">   : L3 ASR&amp;C 2025</span>
+   \\ ___ /    <span style="color:var(--accent)">Kernel</span><span style="color:var(--text-secondary)">   : Bac+3 Admin. SR &amp; Cybersécurité</span>
     '---'     <span style="color:var(--accent)">Uptime</span><span style="color:var(--text-secondary)">   : 3+ ans d'expérience</span>
               <span style="color:var(--accent)">Shell</span><span style="color:var(--text-secondary)">    : Space Mono / Terminal</span>
               <span style="color:var(--accent)">Skills</span><span style="color:var(--text-secondary)">   : Windows Server, AD, TCP/IP, VLAN</span>
