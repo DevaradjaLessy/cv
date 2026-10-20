@@ -967,6 +967,7 @@
         .timeline-description {
             color: var(--text-secondary);
             line-height: 1.8;
+            list-style: none;
         }
 
         .timeline-description li {
@@ -1454,12 +1455,18 @@
         /* ============================================================
            RESPONSIVE
         ============================================================ */
+        /* Grand écran : le sous-titre s'arrête avant les cartes stats flottantes */
+        @media (min-width: 1025px) {
+            .hero h2 { max-width: 70%; }
+        }
+
         @media (max-width: 1024px) {
             .floating-stats {
                 position: relative;
                 right: auto; top: auto;
                 transform: none;
                 flex-direction: row;
+                flex-wrap: wrap;
                 margin: 3rem 0;
             }
 
@@ -1476,6 +1483,11 @@
         @media (max-width: 768px) {
             .hero { min-height: auto; }
             .section, .terminal-section { margin: 4rem 0; }
+
+            .floating-stats { gap: 0.75rem; flex-wrap: nowrap; }
+            .stat-card { flex: 1; min-width: 0; padding: 1rem 0.5rem; }
+            .stat-number { font-size: 1.5rem; }
+            .stat-label { font-size: 0.75rem; }
 
             .timeline { padding-left: 2rem; }
             .timeline-item { padding-left: 1rem; }
@@ -1532,25 +1544,26 @@
 
         <!-- ========== HERO / PROFIL ========== -->
         <section class="hero" id="profil">
-            <div class="hero-badge">Disponible pour nouvelles opportunités</div>
+            <div class="hero-badge">Alternance Bac+5 • 2026 – 2028</div>
 
             <h1>LESSY<br>DÉVARADJA<br>JEAN-NOAH</h1>
 
             <h2>Admin Systèmes, Réseaux et Cybersécurité • Infrastructure IT</h2>
 
             <p class="hero-description">
-                Actuellement en alternance chez SEMAC comme Assistant SI, j'ai développé de bonnes bases en administration systèmes et réseaux.<br><br>
-                Je souhaite intégrer votre entreprise pour renforcer mes compétences et continuer à progresser dans l'infrastructure informatique.<br><br>
+                Actuellement Coordinateur support informatique chez Automobiles Réunion (Renault), en alternance pour préparer le Bac+5 Expert Réseaux Infrastructures et Sécurité (titre RNCP de niveau 7, 3iL Ingénieurs &amp; CCI EDN).<br><br>
+                Diplômé d'un Bac+3 Administrateur Systèmes, Réseaux et Cybersécurité avec mention Très Bien, après 3 ans d'alternance chez SEMAC comme Assistant SI.<br><br>
                 Curieux, rigoureux et passionné, je suis prêt à m'investir pleinement en entreprise et en formation pour devenir un professionnel du métier.
             </p>
 
             <div class="hero-cta">
                 <a href="mailto:deva.lessy@gmail.com" class="btn btn-primary">deva.lessy@gmail.com</a>
                 <a href="tel:0692200023" class="btn btn-secondary">0692 20 00 23</a>
+                <a href="diplomes/bulletin-bachelor-asrc-2025-2026.pdf" target="_blank" rel="noopener" class="btn btn-secondary">📄 Notes Bac+3 • 16,11/20</a>
             </div>
 
             <div class="hero-info">
-                <span>📍 683 chemin Valentin, 97440 Saint-André</span>
+                <span>📍 Saint-André, La Réunion (974)</span>
                 <span>🚗 Permis B</span>
             </div>
 
@@ -1586,6 +1599,7 @@
                     <ul class="skill-list">
                         <li>Windows Server (2016 / 2019 / 2022)</li>
                         <li>Active Directory (comptes, groupes, droits, GPO)</li>
+                        <li>Linux Debian / Ubuntu — services, droits, configuration réseau</li>
                         <li>Déploiement de postes / imprimantes</li>
                         <li>Veeam Backup — sauvegarde &amp; restauration</li>
                         <li>Rédaction de cahiers des charges techniques</li>
@@ -1598,6 +1612,7 @@
                     <ul class="skill-list">
                         <li>Réseaux : TCP/IP, DNS, DHCP, VLAN</li>
                         <li>pfSense — firewall &amp; routage</li>
+                        <li>VPN IPsec IKEv2 site-à-site</li>
                         <li>Configuration réseau &amp; Wi-Fi</li>
                         <li>Fibre optique &amp; soudure</li>
                         <li>Câblage &amp; baie de brassage</li>
@@ -1610,8 +1625,10 @@
                         <li>Support utilisateurs N1/N2</li>
                         <li>FreshService — gestion des tickets &amp; incidents</li>
                         <li>GLPI — gestion de parc &amp; ticketing</li>
-                        <li>Cybersécurité (mots de passe, antivirus)</li>
+                        <li>CTF &amp; challenges de sécurité — 🥇 1er de l'île à la CyberCup Océan Indien</li>
+                        <li>Stratégies de cybersécurité &amp; protection des données (PSSI)</li>
                         <li>EBIOS Risk Manager — analyse de risques (méthode ANSSI)</li>
+                        <li>Sensibilisation des utilisateurs aux risques cyber</li>
                     </ul>
 
                     <!-- Bloc "20 minutes SI" -->
@@ -1631,6 +1648,17 @@
                         <li>Grafana — tableaux de bord &amp; alertes</li>
                         <li>Suivi des performances &amp; disponibilité</li>
                         <li>Veille technologique &amp; reporting</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">OPS</div>
+                    <h3 class="skill-title">Virtualisation &amp; DevOps</h3>
+                    <ul class="skill-list">
+                        <li>Proxmox — VMs, VLANs, snapshots</li>
+                        <li>Docker &amp; Docker Compose — images, conteneurs</li>
+                        <li>CI/CD — GitHub Actions &amp; GHCR</li>
+                        <li>Ansible — bases (playbooks &amp; inventaires)</li>
+                        <li>Scripting bash</li>
                     </ul>
                 </div>
                 <div class="skill-card">
@@ -1665,7 +1693,19 @@
             <div class="timeline">
 
                 <div class="timeline-item">
-                    <div class="timeline-date">Septembre 2025 – Septembre 2026 (1 an) • Bac+3 obtenu, mention Très Bien</div>
+                    <div class="timeline-date">Novembre 2026 – 2028 (2 ans) • En cours</div>
+                    <h3 class="timeline-title">Alternance BAC+5 – Coordinateur support informatique</h3>
+                    <div class="timeline-company">Automobiles Réunion (Renault) • Sainte-Clotilde</div>
+                    <ul class="timeline-description">
+                        <li>Support informatique aux utilisateurs et aux applications métier, gestion des incidents et des tickets</li>
+                        <li>Élaboration du plan de continuité et du plan de reprise d'activité (PCA/PRA)</li>
+                        <li>Suivi et déploiement de nouveaux commutateurs réseau, évolution de l'architecture systèmes et réseaux</li>
+                        <li>Participation au pilotage de projets informatiques et à la conduite du changement</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Septembre 2025 – Octobre 2026 (1 an) • Bac+3 obtenu, mention Très Bien</div>
                     <h3 class="timeline-title">Alternance BAC+3 – Assistant SI</h3>
                     <div class="timeline-company">SEMAC (Groupe Territoires Réunion)</div>
                     <ul class="timeline-description">
@@ -1710,7 +1750,7 @@
                     <h3 class="timeline-title">Stagiaire à la Sorefi de Sainte-Marie</h3>
                     <div class="timeline-company">Sorefi de Sainte-Marie</div>
                     <ul class="timeline-description">
-                        <li>Assurer la maintenance des appareils informatiques</li>
+                        <li>Maintenance des appareils informatiques</li>
                         <li>Câblage de la baie de brassage de l'entreprise</li>
                     </ul>
                 </div>
@@ -1720,9 +1760,9 @@
                     <h3 class="timeline-title">Stagiaire à Megalithe.tech de Sainte-Marie</h3>
                     <div class="timeline-company">Megalithe.tech de Sainte-Marie</div>
                     <ul class="timeline-description">
-                        <li>Résolution de problème de licence dans diverses entreprises</li>
-                        <li>Création de Serveur sous Windows Serveur 2016, 2019</li>
-                        <li>Réparation et maintenance d'appareils informatique</li>
+                        <li>Résolution de problèmes de licences dans diverses entreprises</li>
+                        <li>Création de serveurs sous Windows Server 2016 et 2019</li>
+                        <li>Réparation et maintenance d'appareils informatiques</li>
                     </ul>
                 </div>
 
@@ -1748,14 +1788,26 @@
             </div>
             <div class="timeline">
                 <div class="timeline-item">
+                    <div class="timeline-date">2026 – 2028 • En cours</div>
+                    <h3 class="timeline-title">BAC+5 – Expert Réseaux Infrastructures et Sécurité</h3>
+                    <div class="timeline-company">3iL Ingénieurs &amp; CCI EDN (École du Numérique) • Alternance 24 mois • Titre de niveau 7 (Bac+5), RNCP 39781</div>
+                    <ul class="timeline-description">
+                        <li>Gouvernance des infrastructures&nbsp;: PCA/PRA, SLA, conformité réglementaire, numérique responsable</li>
+                        <li>Conception d'architectures systèmes et réseaux, supervision de la mise en œuvre, gestion des incidents</li>
+                        <li>Pilotage de la sécurité des SI&nbsp;: politique de sécurité, audit, tests d'intrusion, analyse forensique, SOC</li>
+                        <li>Pilotage de projets (Agile) et conduite du changement</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
                     <div class="timeline-date">2025 – 2026 • Obtenu le 15/10/2026 • Mention Très Bien</div>
                     <h3 class="timeline-title">BAC+3 – Administrateur Systèmes, Réseaux et Cybersécurité</h3>
                     <div class="timeline-company">Bachelor ASRC • 3iL Ingénieurs &amp; CCI EDN (École du Numérique) • Alternance • Titre de niveau 6 (Bac+3) en 1 an</div>
                     <ul class="timeline-description">
                         <li>Moyenne générale : 16,11/20 — tous les blocs de compétences validés</li>
+                        <li>Moyennes par bloc&nbsp;: Systèmes et virtualisation 14,00 • Réseau et cloud 17,20 • Cybersécurité 15,74 • Gestion de projets 16,59</li>
                         <li>Projet de fin d'études (PEP) : 17/20 à l'écrit et 17/20 à l'oral</li>
                     </ul>
-                    <a href="diplomes/bulletin-bachelor-asrc-2025-2026.pdf" target="_blank" rel="noopener" class="cert-link">Voir le bulletin</a>
+                    <a href="diplomes/bulletin-bachelor-asrc-2025-2026.pdf" target="_blank" rel="noopener" class="cert-link">Voir le bulletin (PDF)</a>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2023 – 2025</div>
@@ -1765,7 +1817,7 @@
                 <div class="timeline-item">
                     <div class="timeline-date">2019 – 2023</div>
                     <h3 class="timeline-title">Baccalauréat Professionnel Systèmes Numériques</h3>
-                    <div class="timeline-company">Option C : Réseaux Informatiques et Systèmes Communicants – Mention Très bien</div>
+                    <div class="timeline-company">Option C : Réseaux Informatiques et Systèmes Communicants – Mention Très Bien</div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2019</div>
@@ -1872,8 +1924,8 @@
                             <span class="metric-label">Zone d'activité</span>
                         </div>
                         <div class="metric">
-                            <span class="metric-value">∞</span>
-                            <span class="metric-label">Ambition</span>
+                            <span class="metric-value">6</span>
+                            <span class="metric-label">Mois d'activité</span>
                         </div>
                     </div>
 
@@ -1881,7 +1933,7 @@
                         <li>Montage et assemblage de PC sur mesure pour particuliers</li>
                         <li>Installation et configuration d'équipements réseau (switch, routeur, Wi-Fi)</li>
                         <li>Dépannage informatique et assistance technique à domicile</li>
-                        <li>Objectif : développer KreoTech en véritable entreprise de services IT à La Réunion</li>
+                        <li>Objectif de départ : développer KreoTech en entreprise de services IT à La Réunion</li>
                     </ul>
 
                     <div class="case-study-footer">
@@ -1959,7 +2011,7 @@
             </div>
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-date">CyberCup Océan Indien • Compétition de cybersécurité</div>
+                    <div class="timeline-date">Juin 2025 • CyberCup Océan Indien • Compétition de cybersécurité</div>
                     <h3 class="timeline-title">🥇 1ers de l'île – CyberCup Océan Indien</h3>
                     <div class="timeline-company">Équipe FayaWall — 1ère place parmi toutes les équipes réunionnaises</div>
                     <ul class="timeline-description" style="margin-top:0.75rem">
@@ -2029,9 +2081,9 @@
                     </div>
                     <div class="terminal-input-row">
                         <span class="terminal-prompt-prefix">lessy@kreotech:~$</span>
-                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="tap a command...">
+                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="tape une commande...">
                     </div>
-                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · ls certifs · cat ebios · cat contact · cat kreolocation · uptime · clear</div>
+                    <div class="terminal-hint">💡 Essaie : whoami · ls skills · ls certifs · cat bulletin · cat ebios · cat contact · cat kreolocation · uptime · clear</div>
                 </div>
             </div>
         </section>
@@ -2039,7 +2091,7 @@
         <!-- ========== FOOTER ========== -->
         <footer class="footer">
             <div class="footer-content">
-                © 2025 Lessy Dévaradja Jean-Noah • 683 chemin Valentin, 97440 Saint-André, Réunion
+                © 2026 Lessy Dévaradja Jean-Noah • Saint-André, La Réunion
             </div>
             <div class="footer-links">
                 <a href="mailto:deva.lessy@gmail.com" class="footer-link">deva.lessy@gmail.com</a>
@@ -2189,6 +2241,7 @@
   whoami          — identité du système
   ls skills       — liste les compétences
   ls formations   — parcours scolaire
+  cat bulletin    — résultats du Bac+3 (mention TB)
   ls certifs      — certifications &amp; attestations
   cat ebios       — formation EBIOS Risk Manager
   cat contact     — coordonnées
@@ -2200,31 +2253,59 @@
   neofetch        — infos système complètes`,
 
             whoami: () => `<span style="color:#a1efbd">lessy-devaradja-jean-noah</span>
+Étudiant Bac+5 Expert Réseaux Infrastructures &amp; Sécurité (alternance)
 Administrateur Systèmes, Réseaux &amp; Cybersécurité (Bac+3, mention Très Bien)
 Réunion 974
-Alternant @ SEMAC • Fondateur KreoTech &amp; KreoLocation`,
+Coordinateur support informatique @ Automobiles Réunion (Renault)
+Ex-alternant @ SEMAC
+Fondateur KreoTech &amp; KreoLocation`,
 
             'ls skills': () => `<span style="color:#60a5fa">drwxr-xr-x</span>  systemes/
 <span style="color:#60a5fa">drwxr-xr-x</span>  reseaux/
 <span style="color:#60a5fa">drwxr-xr-x</span>  securite/
+<span style="color:#60a5fa">drwxr-xr-x</span>  ebios-rm/
 <span style="color:#60a5fa">drwxr-xr-x</span>  support-n1-n2/
 <span style="color:#60a5fa">drwxr-xr-x</span>  windows-server/
 <span style="color:#60a5fa">drwxr-xr-x</span>  active-directory/
+<span style="color:#60a5fa">drwxr-xr-x</span>  linux/
 <span style="color:#60a5fa">drwxr-xr-x</span>  fibre-optique/
 <span style="color:#60a5fa">drwxr-xr-x</span>  pfsense/
+<span style="color:#60a5fa">drwxr-xr-x</span>  vpn-ipsec/
 <span style="color:#60a5fa">drwxr-xr-x</span>  zabbix/
 <span style="color:#60a5fa">drwxr-xr-x</span>  grafana/
+<span style="color:#60a5fa">drwxr-xr-x</span>  proxmox/
+<span style="color:#60a5fa">drwxr-xr-x</span>  docker/
+<span style="color:#60a5fa">drwxr-xr-x</span>  github-actions/
+<span style="color:#60a5fa">drwxr-xr-x</span>  ansible/
 <span style="color:#60a5fa">drwxr-xr-x</span>  veeam-backup/
 <span style="color:#60a5fa">drwxr-xr-x</span>  freshservice/
 <span style="color:#60a5fa">drwxr-xr-x</span>  glpi/
 <span style="color:#60a5fa">-rw-r--r--</span>  cahiers-des-charges.md`,
 
-            'ls formations': () => `<span style="color:#a1efbd">[2025-2026]</span> Titre Admin. Systèmes, Réseaux &amp; Cybersécurité
+            'ls formations': () => `<span style="color:#a1efbd">[2026-2028]</span> Expert Réseaux Infrastructures &amp; Sécurité (Bac+5)
+            Niveau 7 — 3iL &amp; CCI EDN — Alternance — <span style="color:var(--accent)">en cours</span>
+<span style="color:#a1efbd">[2025-2026]</span> Titre Admin. Systèmes, Réseaux &amp; Cybersécurité
             Niveau 6 (Bac+3) — 3iL &amp; CCI EDN — Mention TB (16,11/20)
 <span style="color:#a1efbd">[2023-2025]</span> Technicien Supérieur Systèmes et Réseaux (Bac+2)
             Alternance SEMAC
 <span style="color:#a1efbd">[2019-2023]</span> Bac Pro Systèmes Numériques — Mention TB
-<span style="color:#a1efbd">[2019]</span>      DNB — Série générale`,
+<span style="color:#a1efbd">[2019]</span>      DNB — Série générale
+
+<span style="color:var(--text-tertiary)">Tape</span> <span style="color:var(--accent)">cat bulletin</span> <span style="color:var(--text-tertiary)">pour les notes du Bac+3.</span>`,
+
+            'cat bulletin': () => `<span style="color:var(--accent)">╔══════════════════════════════════════╗
+║   BACHELOR ASRC 2025-2026 — 3iL      ║
+╚══════════════════════════════════════╝</span>
+BC01 Systèmes &amp; virtualisation  <span style="color:#a1efbd">14,00</span>  ✔ validé
+BC02 Réseau &amp; cloud             <span style="color:#a1efbd">17,20</span>  ✔ validé
+BC03 Cybersécurité              <span style="color:#a1efbd">15,74</span>  ✔ validé
+BC04 Gestion de projets         <span style="color:#a1efbd">16,59</span>  ✔ validé
+PEP  Écrit 17 · Oral 17         <span style="color:#a1efbd">17,00</span>  ✔ validé
+
+Moyenne générale : <span style="color:var(--accent)">16,11/20</span>
+Décision du jury : <span style="color:#22c55e">Admis — mention Très Bien</span> (15/10/2026)
+
+<a href="diplomes/bulletin-bachelor-asrc-2025-2026.pdf" target="_blank" rel="noopener" style="color:var(--accent)">↗ Ouvrir le bulletin (PDF)</a>`,
 
             'ls certifs': () => `<span style="color:#a1efbd">[2026]</span> Formation EBIOS Risk Manager — Club EBIOS <span style="color:var(--accent)">★</span>
 <span style="color:#a1efbd">[----]</span> Certification Pix — compétences numériques
@@ -2258,7 +2339,7 @@ Ce que ça couvre :
 ╚═══════════════════════════════╝</span>
 📧  deva.lessy@gmail.com
 📞  0692 20 00 23
-📍  683 chemin Valentin, 97440 Saint-André
+📍  Saint-André, La Réunion (974)
 🚗  Permis B`,
 
             'cat kreolocation': () => `<span style="color:#14b8a6">╔══════════════════════════════════════╗
@@ -2276,14 +2357,12 @@ Stack web :
 Business :
   ▸ Modèle mandataire — 75% propriétaire / 25% agence
   ▸ Zéro risque pour les partenaires
-  ▸ SEO — Search Console, sitemap, Google My Business
-
-<span style="color:#14b8a6">Projet familial — mes parents me soutiennent 🙏</span>`,
+  ▸ SEO — Search Console, sitemap, Google My Business`,
 
             'cat kreotech': () => `<span style="color:var(--accent)">╔═══════════════════════════════╗
 ║     KREOTECH RÉUNION          ║
 ╚═══════════════════════════════╝</span>
-Status  : <span style="color:#22c55e">● ACTIF</span>
+Status  : <span style="color:#71717a">● CLOS</span> — 6 mois d'activité
 Type    : Micro-entreprise IT
 Zone    : La Réunion (974)
 
@@ -2292,7 +2371,7 @@ Services :
   ▸ Config réseau (switch, routeur, Wi-Fi)
   ▸ Dépannage &amp; assistance à domicile
 
-Objectif : devenir une vraie ESN locale.`,
+Objectif de départ : devenir une ESN locale.`,
 
             'cat 20min': () => `<span style="color:var(--accent)">╔═══════════════════════════════════╗
 ║   INITIATIVE "20 MINUTES SI"     ║
@@ -2317,7 +2396,7 @@ Impact : réduction des tickets récurrents
                 const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = now.getHours();
                 const mins  = now.getMinutes();
-                return `<span style="color:#a1efbd">${days} days, ${hours}h${String(mins).padStart(2,'0')}m</span>  up since 2023-09-01 (alternance SEMAC)
+                return `<span style="color:#a1efbd">${days} days, ${hours}h${String(mins).padStart(2,'0')}m</span>  up since 2023-09-01 (début de l'alternance)
 load average: <span style="color:var(--accent)">0.42, 0.38, 0.31</span>`;
             },
 
@@ -2327,11 +2406,11 @@ load average: <span style="color:var(--accent)">0.42, 0.38, 0.31</span>`;
     .---.     </span>  <span style="color:var(--text-primary)">lessy@kreotech</span>
    /     \\    <span style="color:var(--text-tertiary)">──────────────────────────</span>
   | (•) (•)|  <span style="color:var(--accent)">OS</span><span style="color:var(--text-secondary)">       : Admin Systèmes &amp; Réseaux</span>
-  |   ▽   |   <span style="color:var(--accent)">Host</span><span style="color:var(--text-secondary)">     : SEMAC • La Réunion</span>
-   \\ ___ /    <span style="color:var(--accent)">Kernel</span><span style="color:var(--text-secondary)">   : Bac+3 Admin. SR &amp; Cybersécurité</span>
+  |   ▽   |   <span style="color:var(--accent)">Host</span><span style="color:var(--text-secondary)">     : Automobiles Réunion (Renault)</span>
+   \\ ___ /    <span style="color:var(--accent)">Kernel</span><span style="color:var(--text-secondary)">   : Bac+5 Expert Réseaux Infra &amp; Sécu</span>
     '---'     <span style="color:var(--accent)">Uptime</span><span style="color:var(--text-secondary)">   : 3+ ans d'expérience</span>
               <span style="color:var(--accent)">Shell</span><span style="color:var(--text-secondary)">    : Space Mono / Terminal</span>
-              <span style="color:var(--accent)">Skills</span><span style="color:var(--text-secondary)">   : Windows Server, AD, TCP/IP, VLAN</span>
+              <span style="color:var(--accent)">Skills</span><span style="color:var(--text-secondary)">   : Windows Server, AD, Linux, VLAN, Docker</span>
               <span style="color:var(--accent)">Projects</span><span style="color:var(--text-secondary)"> : KreoTech + KreoLocation</span>
               <span style="color:var(--accent)">Colors</span>   <span style="color:#f97316">███</span><span style="color:#fb923c">███</span><span style="color:#fdba74">███</span>`,
         };
